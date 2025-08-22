@@ -1,0 +1,105 @@
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: Arial, sans-serif;
+  padding: 1rem 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.question-text {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.options-list {
+  list-style: none;
+  padding: 0;
+}
+
+.option-item {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.3s ease;
+}
+
+.option-item:hover {
+  background-color: #f0f0f0;
+}
+
+.option-correct {
+  background-color: #b2f5b2; /* light green */
+  cursor: default;
+}
+
+.option-wrong {
+  background-color: #f5b2b2; /* light red */
+  cursor: default;
+}
+
+.feedback-text {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+.button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.center-text {
+  text-align: center;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Animate option background color smoothly */
+.option-item {
+  transition: background-color 0.4s ease;
+}
+
+/* Feedback text animation */
+.feedback-text {
+  animation: fadeIn 0.7s ease forwards;
+}
+
+.option-item:focus {
+  outline: 3px solid #007bff;
+  outline-offset: 2px;
+}
+
+button:focus {
+  outline: 3px solid #007bff !important;
+  outline-offset: 2px;
+}
+
