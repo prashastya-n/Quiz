@@ -1,0 +1,64 @@
+{
+  "results": [
+    {
+      "category": "Science: Computers",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "What does CPU stand for?",
+      "correct_answer": "Central Processing Unit",
+      "incorrect_answers": [
+        "Central Process Unit",
+        "Computer Personal Unit",
+        "Central Processor Unit"
+      ]
+    },
+    {
+      "category": "Science: Computers",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "In programming, what is a loop that never ends called?",
+      "correct_answer": "Infinite Loop",
+      "incorrect_answers": [
+        "Endless Loop",
+        "Loop Loop",
+        "For Loop"
+      ]
+    },
+    {
+      "category": "Science: Computers",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Which programming language shares its name with an island in Indonesia?",
+      "correct_answer": "Java",
+      "incorrect_answers": [
+        "Python",
+        "C",
+        "Jakarta"
+      ]
+    },
+    {
+      "category": "Science: Computers",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "What does the acronym GPU stand for?",
+      "correct_answer": "Graphics Processing Unit",
+      "incorrect_answers": [
+        "Gaming Processor Unit",
+        "Graphite Producing Unit",
+        "Graphical Proprietary Unit"
+      ]
+    },
+    {
+      "category": "Science: Computers",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "What does 'HTTP' stand for?",
+      "correct_answer": "Hypertext Transfer Protocol",
+      "incorrect_answers": [
+        "Hyperlink Transfer Protocol",
+        "Hypertext Transmission Protocol",
+        "Hyperlink Transmission Protocol"
+      ]
+    }
+  ]
+}
