@@ -23,7 +23,8 @@ function App() {
 
   useEffect(() => {
     console.log('Starting fetch...');
-    fetch('/questions.json')
+    fetch(`${process.env.PUBLIC_URL}/questions.json`)
+
       .then(res => {
         console.log('Fetch response status:', res.status);
         if (!res.ok) {
