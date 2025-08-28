@@ -8,6 +8,14 @@ function decodeHtml(html) {
   return txt.value;
 }
 
+// Helper to shuffle any array randomly (Fisher-Yates via sort)
+function shuffleArray(array) {
+  return array
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+}
+
 const TIMER_DURATION = 30; // seconds for each question timer
 
 function App() {
@@ -26,7 +34,7 @@ function App() {
 
   const firstOptionRef = useRef(null);
 
-  // Fetch questions on mount
+  // Fetch and prepare questions on mount with randomization
   useEffect(() => {
     fetch(`${process.env.PUBLIC_URL}/questions.json`)
       .then(res => {
@@ -35,9 +43,9 @@ function App() {
       })
       .then(data => {
         const formattedQuestions = data.results.map(q => {
-          const options = [...q.incorrect_answers, q.correct_answer]
-            .map(opt => decodeHtml(opt))
-            .sort(() => Math.random() - 0.5);
+          const options = shuffleArray(
+            [...q.incorrect_answers, q.correct_answer].map(opt => decodeHtml(opt))
+          );
 
           return {
             text: decodeHtml(q.question),
@@ -45,7 +53,10 @@ function App() {
             correctIndex: options.findIndex(opt => opt === decodeHtml(q.correct_answer))
           };
         });
-        setQuestions(formattedQuestions);
+
+        const shuffledQuestions = shuffleArray(formattedQuestions);
+
+        setQuestions(shuffledQuestions);
         setLoading(false);
       })
       .catch(err => {
@@ -111,6 +122,10 @@ function App() {
   }
 
   function handleRestart() {
+    // Shuffle questions again on restart
+    const reshuffledQuestions = shuffleArray(questions);
+    setQuestions(reshuffledQuestions);
+
     setCurrentQuestionIndex(0);
     setSelectedOption(null);
     setIsAnswered(false);
