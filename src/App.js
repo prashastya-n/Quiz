@@ -1,22 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
-// Helper to decode HTML entities returned by API or JSON
 function decodeHtml(html) {
   var txt = document.createElement("textarea");
   txt.innerHTML = html;
   return txt.value;
 }
 
-// Helper to shuffle any array randomly (Fisher-Yates via sort)
-function shuffleArray(array) {
-  return array
-    .map(value => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-}
-
-const TIMER_DURATION = 30; // seconds for each question timer
+const TIMER_DURATION = 30;
 
 function App() {
   const [questions, setQuestions] = useState([]);
@@ -26,15 +17,14 @@ function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [wasSkipped, setWasSkipped] = useState(false); // NEW: track if question was skipped
+  const [wasSkipped, setWasSkipped] = useState(false);
   const [score, setScore] = useState(0);
   const [isQuizFinished, setIsQuizFinished] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION); // Timer state for countdown
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
 
   const firstOptionRef = useRef(null);
 
-  // Fetch and prepare questions on mount with randomization
   useEffect(() => {
     fetch(`${process.env.PUBLIC_URL}/questions.json`)
       .then(res => {
@@ -43,20 +33,17 @@ function App() {
       })
       .then(data => {
         const formattedQuestions = data.results.map(q => {
-          const options = shuffleArray(
-            [...q.incorrect_answers, q.correct_answer].map(opt => decodeHtml(opt))
-          );
+          const options = [...q.incorrect_answers, q.correct_answer]
+            .map(opt => decodeHtml(opt))
+            .sort(() => Math.random() - 0.5);
 
           return {
             text: decodeHtml(q.question),
             options: options,
             correctIndex: options.findIndex(opt => opt === decodeHtml(q.correct_answer))
           };
-        });
-
-        const shuffledQuestions = shuffleArray(formattedQuestions);
-
-        setQuestions(shuffledQuestions);
+        }).sort(() => Math.random() - 0.5);
+        setQuestions(formattedQuestions);
         setLoading(false);
       })
       .catch(err => {
@@ -65,27 +52,25 @@ function App() {
       });
   }, []);
 
-  // Focus on first option button on question change
   useEffect(() => {
     if (firstOptionRef.current) {
       firstOptionRef.current.focus();
     }
   }, [currentQuestionIndex]);
 
-  // TIMER LOGIC
   useEffect(() => {
-    if (isQuizFinished) return; // stop timer if quiz is finished
+    if (isQuizFinished) return;
 
-    setTimeLeft(TIMER_DURATION); // Reset timer at start of new question
+    setTimeLeft(TIMER_DURATION);
 
     const timer = setInterval(() => {
       setTimeLeft(prevTime => {
         if (prevTime === 1) {
           if (!isAnswered) {
-            setWasSkipped(true); // mark skipped
+            setWasSkipped(true);
             setIsAnswered(true);
           }
-          clearInterval(timer); // stop timer on expiry
+          clearInterval(timer);
           return 0;
         }
         return prevTime - 1;
@@ -100,7 +85,7 @@ function App() {
     if (!isAnswered) {
       setSelectedOption(index);
       setIsAnswered(true);
-      setWasSkipped(false); // reset skip if user answered manually
+      setWasSkipped(false);
 
       if (index === questions[currentQuestionIndex].correctIndex) {
         setScore(prevScore => prevScore + 1);
@@ -115,17 +100,13 @@ function App() {
       setCurrentQuestionIndex(nextIndex);
       setSelectedOption(null);
       setIsAnswered(false);
-      setWasSkipped(false); // reset skipped state
+      setWasSkipped(false);
     } else {
       setIsQuizFinished(true);
     }
   }
 
   function handleRestart() {
-    // Shuffle questions again on restart
-    const reshuffledQuestions = shuffleArray(questions);
-    setQuestions(reshuffledQuestions);
-
     setCurrentQuestionIndex(0);
     setSelectedOption(null);
     setIsAnswered(false);
@@ -174,7 +155,6 @@ function App() {
     <main className="container fade-in" key={currentQuestionIndex} aria-live="polite" aria-atomic="true">
       <h2>Quiz Time!</h2>
 
-      {/* TIMER DISPLAY */}
       <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>
         Time Left: {timeLeft} second{timeLeft !== 1 ? 's' : ''}
       </div>
