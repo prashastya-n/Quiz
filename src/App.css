@@ -8,6 +8,15 @@
   background-color: #fafafa;
 }
 
+/* Responsive container for smaller screens */
+@media (max-width: 600px) {
+  .container {
+    max-width: 90%;
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+}
+
 h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -30,11 +39,16 @@ h2 {
   border-radius: 6px;
   cursor: pointer;
   background-color: white;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.4s ease;
 }
 
 .option-item:hover {
   background-color: #f0f0f0;
+}
+
+.option-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .option-correct {
@@ -51,6 +65,7 @@ h2 {
   font-weight: bold;
   font-size: 1.1rem;
   margin-top: 1rem;
+  animation: fadeIn 0.7s ease forwards;
 }
 
 .button {
@@ -83,16 +98,7 @@ h2 {
   animation: fadeIn 0.5s ease forwards;
 }
 
-/* Animate option background color smoothly */
-.option-item {
-  transition: background-color 0.4s ease;
-}
-
-/* Feedback text animation */
-.feedback-text {
-  animation: fadeIn 0.7s ease forwards;
-}
-
+/* Focus outlines for accessibility */
 .option-item:focus {
   outline: 3px solid #007bff;
   outline-offset: 2px;
@@ -103,3 +109,10 @@ button:focus {
   outline-offset: 2px;
 }
 
+/* Timer styling */
+.timer {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #d6336c; /* bright pink/red for urgency */
+  margin-bottom: 1rem;
+}
